@@ -6,6 +6,10 @@
 
 - Download norwegian and swedish vectors from https://fasttext.cc/docs/en/aligned-vectors.html and put them in the same folder
 
+- The command to filter each .vec file based on a frequency list is `grep -Fwf <(cut no_50k.txt -f 1 -d ' ') wiki.no.align.vec > no_filtered.vec`
+
+- We tried frequency lists from [here](https://github.com/hermitdave/FrequencyWords/tree/master/content/2018/)
+
 # Usage
 
 `python3 falsefrond.py`  

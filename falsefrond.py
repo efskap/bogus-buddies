@@ -4,10 +4,16 @@ import os
 import sys
 from typing import List, Union
 
-target_vec_file = "./wiki.no.align.vec"
-source_vec_file = "./wiki.sv.align.vec"
+# Whether or not to use the filtered word list for faster computation at the expense of comprehensiveness.
+filtered = False
+if filtered:
+    target_vec_file = "./no_filtered.vec"
+    source_vec_file = "./sv_filtered.vec"
+else:
+    target_vec_file = "./wiki.no.align.vec"
+    source_vec_file = "./wiki.sv.align.vec"
 
-
+# When loading into RAM, maps a common_word to its original form and the vector.
 source_vec_map = {}
 target_vec_map = {}
 
@@ -42,7 +48,11 @@ def find_word_in_vec_file(word: str, filepath: str, transform=False):
                 return parse_vec_line(line)
     print(f'could not find {word} in {filepath}', file=sys.stderr)
 
+
 def parse_vec_line(line: str) -> Union[str, List[float]]:
+    '''
+    Parses a line of a .vec file into the word and its vector.
+    '''
     split = line.split()
     vector = split[-300:]
     word = " ".join(split[:len(split)-300])
@@ -50,11 +60,13 @@ def parse_vec_line(line: str) -> Union[str, List[float]]:
     return word, parsed_vector
 
 def apply_transformations(source: str) -> str:
+    '''
+    Transform a Swedish or Norwegian word into a "common form".
+    '''
     source = source.replace('ck', 'kk')
     source = source.replace('x',  'ks')
     source = source.replace('æ',  'ä')
     source = source.replace('ø',  'ö')
-    # ...
     return source
 
 def cos_similarity(vec1, vec2):
@@ -69,9 +81,10 @@ def check(src_word, src_vec):
             print(f'no match for: {common_word} <- {src_word}', file=sys.stderr)
             return
         tar_word, tar_vec = tar_data
-        sim = cos_similarity(src_vec, tar_vec)
-        print(f'{sim:.0%}\t{src_word}\t{common_word}\t{tar_word}')
-header = "sim\tsrcWord\tcommonWord\ttarWord"
+        score = 1 - cos_similarity(src_vec, tar_vec)
+        print(f'{score:.0%}\t{src_word}\t{common_word}\t{tar_word}')
+
+header = "score\tsrcWord\tcommonWord\ttarWord"
 def main():
     # load_into_map(target_vec_file, source_vec_map)
     if len(sys.argv) > 1:
@@ -94,6 +107,7 @@ def main():
             sys.stderr.flush()
 
 if __name__ == "__main__":
+    # don't print exception on ctrl-c or when pipe closes, just quit
     signal.signal(signal.SIGPIPE, signal.SIG_DFL)
     signal.signal(signal.SIGINT, signal.SIG_DFL)
     main()
