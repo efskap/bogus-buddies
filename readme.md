@@ -26,68 +26,71 @@ Process first 50 matches, and sort them by similarity
 
 
 ```
-λ › python3 falsefrond.py barn barnet barns barnets man sjö åt | sort -nr
-73%     barn    barn    barn
-71%     barnets barnets barnets
-69%     man     man     man
-67%     barns   barns   barns
-67%     barnet  barnet  barnet
-28%     sjö     sjö     sjø
-16%     åt      åt      åt
-sim     srcWord commonWord      tarWord
+λ › python3 falsefrond.py barn barnet barns barnets man sjö åt samlag skede | sort -n                    ~/LDA_project master
+score   srcWord commonWord      tarWord
+27%     barn    barn    barn
+29%     barnets barnets barnets
+31%     man     man     man
+33%     barnet  barnet  barnet
+33%     barns   barns   barns
+72%     sjö     sjö     sjø
+82%     samlag  samlag  samlag
+84%     åt      åt      åt
+87%     skede   skede   skede
 ```
 
 
+With `filtered = True` in the source code:
 ```
-λ › python3 falsefrond.py | head -n 50 | sort -nr
-62%     de      de      de
-58%     som     som     som
-58%     i       i       i
-58%     .       .       .
-57%     -       -       -
-56%     ,       ,       ,
-54%     på      på      på
-52%     av      av      av
-51%     ligger  ligger  ligger
-49%     med     med     med
-47%     of      of      of
-47%     en      en      en
-46%     )       )       )
-46%     #       #       #
-45%     (       (       (
-45%     '       '       '
-44%     det     det     det
-44%     den     den     den
-43%     km      km      km
-41%     </s>    </s>    </s>
-41%     meter   meter   meter
-41%     delen   delen   delen
-40%     om      om      om
-40%     att     att     att
-39%     #omdirigering   #omdirigering   #omdirigering
-36%     mm      mm      mm
-36%     °c      °c      °c
-35%     för     för     før
-33%     havet   havet   havet
-29%     till    till    till
-27%     underarter      underarter      underarter
-27%     landet  landet  landet
-27%     ett     ett     ett
-26%     över    över    över
-22%     då      då      då
-21%     }}      }}      }}
-20%     släktet släktet släktet
-19%     månaden månaden månaden
-18%     life    life    life
-18%     familjen        familjen        familjen
-16%     och     och     och
-14%     finns   finns   finns
-13%     catalogue       catalogue       catalogue
-10%     är      är      är
-9%      trakten trakten trakten
-9%      kallaste        kallaste        kallaste
-7%      inga    inga    inga
-4%      runt    runt    runt
-1%      ingår   ingår   ingår
-sim     srcWord commonWord      tarWord
+λ › python3 falsefrond.py 2>/dev/null | head -n 50 | sort -n
+score   srcWord commonWord      tarWord
+19%     han     han     han
+23%     var     var     var
+31%     har     har     har
+38%     de      de      de
+41%     provinsen       provinsen       provinsen
+42%     i       i       i
+42%     som     som     som
+43%     eller   eller   eller
+43%     juli    juli    juli
+44%     men     men     men
+46%     kan     kan     kan
+46%     på      på      på
+46%     under   under   under
+48%     av      av      av
+49%     ligger  ligger  ligger
+51%     med     med     med
+53%     en      en      en
+53%     of      of      of
+56%     den     den     den
+56%     det     det     det
+57%     km      km      km
+57%     millimeter      millimeter      millimeter
+59%     delen   delen   delen
+59%     meter   meter   meter
+60%     att     att     att
+60%     om      om      om
+64%     °c      °c      °c
+64%     lake    lake    lake
+64%     mm      mm      mm
+65%     för     för     før
+66%     inte    inte    inte
+66%     kvadratkilometer        kvadratkilometer        kvadratkilometer
+66%     per     per     per
+67%     havet   havet   havet
+71%     till    till    till
+72%     närheten        närheten        nærheten
+72%     sjö     sjö     sjø
+73%     ett     ett     ett
+73%     landet  landet  landet
+74%     över    över    över
+78%     då      då      då
+81%     vid     vid     vid
+82%     life    life    life
+84%     och     och     och
+86%     finns   finns   finns
+90%     är      är      är
+91%     trakten trakten trakten
+92%     råder   råder   råder
+93%     inga    inga    inga
 ```
